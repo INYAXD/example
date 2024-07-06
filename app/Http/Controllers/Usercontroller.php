@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Http\Request;
 use App\Models\User;
 class Usercontroller extends Controller{
@@ -49,14 +50,20 @@ class Usercontroller extends Controller{
     }
     
     public function loginaction(Request $input){
-        $request=$input->all();
-        if(Auth::attempt(["email" => $request['email'], "password" => $request['password']])){
+        //$request=$input->all();
+        //$request= Request::all();
+        if(Auth::attempt(["email" => $input->email, "password" => $input->password])){
             //return Auth::user()->name."登入成功";
             return redirect(route("index"))->with(["msg" => "登入成功！歡迎".Auth::user()->name."回來"]);
         }else{
-            $error_email = $request["email"];
+            $error_email = $input->email;
             return redirect(route("login.form"))->with(["error" => "您的帳號或密碼錯誤，請重試一次","error_email"=>$error_email]);
         }
+    }
+
+    public function loginout(){
+        Auth::logout();
+        return redirect(route("index"))->with(["msg"=>"您已登出"]);
     }
 
 

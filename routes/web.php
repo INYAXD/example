@@ -15,9 +15,11 @@ use App\Models\User;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::middleware("userrole")->get('/welcome',function() {
+    return view('welcome');
+});
 
 Route::get('/index', [Usercontroller::class,"index"])->name("index");
-
 
 Route::get('/register', [Usercontroller::class,"register"])->name("register.form");
 
@@ -26,3 +28,5 @@ Route::post('/register', [Usercontroller::class,"registeraction"])->name("regist
 Route::get('/login', [Usercontroller::class,"login"])->name("login.form");
 
 Route::post('/login', [Usercontroller::class,"loginaction"])->name("login.action");
+
+Route::get('/loginout', [Usercontroller::class,"loginout"])->name("loginout");
